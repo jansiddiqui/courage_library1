@@ -1,15 +1,14 @@
-<!-- slots.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Your Slot - Courage Library</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header class="header">
-        <img src="logo.png" alt="Courage Library Logo" class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Courage Library Logo" class="logo">
         <h1>Select Your Slot</h1>
     </header>
     <main class="main-content">
@@ -32,28 +31,31 @@
         </div>
     </footer>
     <script>
-        const slots = {
-            1: ['6am-7am', '7am-8am', '8am-9am', '9am-10am', '10am-11am', '11am-12pm', '12pm-1pm', '1pm-2pm', '2pm-3pm', '3pm-4pm', '4pm-5pm', '5pm-6pm', '6pm-7pm', '7pm-8pm', '8pm-9pm'],
-            2: ['6am-8am', '7am-9am', '8am-10am', '9am-11am', '10am-12pm', '11am-1pm', '12pm-2pm', '1pm-3pm', '2pm-4pm', '3pm-5pm', '4pm-6pm', '5pm-7pm', '6pm-8pm', '7pm-9pm'],
-            3: ['6am-9am', '7am-10am', '8am-11am', '9am-12pm', '10am-1pm', '11am-2pm', '12pm-3pm', '1pm-4pm', '2pm-5pm', '3pm-6pm', '4pm-7pm', '5pm-8pm', '6pm-9pm'],
-            // Add other durations similarly
-        };
+        const slots = [
+            { duration: 1, time: "6 AM - 7 AM" },
+            { duration: 2, time: "7 AM - 9 AM" },
+            { duration: 3, time: "9 AM - 12 PM" },
+            { duration: 4, time: "12 PM - 4 PM" },
+            { duration: 5, time: "4 PM - 9 PM" }
+        ];
 
         function filterSlots() {
             const duration = document.getElementById('slot-duration').value;
-            const container = document.getElementById('slots-container');
-            container.innerHTML = '';
+            const filteredSlots = slots.filter(slot => slot.duration == duration);
 
-            if (slots[duration]) {
-                slots[duration].forEach(slot => {
-                    const slotDiv = document.createElement('div');
-                    slotDiv.classList.add('slot');
-                    slotDiv.innerHTML = `<a href="{{ url_for('take_course') }}?duration=${duration}&slot=${slot}" class="slot-link">${slot}</a>`;
-                    container.appendChild(slotDiv);
-                });
-            } else {
-                container.innerHTML = '<p>No slots available for this duration.</p>';
-            }
+            const slotsContainer = document.getElementById('slots-container');
+            slotsContainer.innerHTML = '';
+
+            filteredSlots.forEach(slot => {
+                const slotElement = document.createElement('div');
+                slotElement.className = 'slot';
+                slotElement.innerHTML = `
+                    <p>Duration: ${slot.duration} hours</p>
+                    <p>Time: ${slot.time}</p>
+                    <a href="/take_course?duration=${slot.duration}&slot=${slot.time}" class="btn">Select Slot</a>
+                `;
+                slotsContainer.appendChild(slotElement);
+            });
         }
     </script>
 </body>
