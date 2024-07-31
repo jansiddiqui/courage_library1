@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Form - Courage Library</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Courage Library Logo" class="logo">
+        <img src="logo.png" alt="Courage Library Logo" class="logo">
         <h1>Course Enrollment Form</h1>
         <form action="{{ url_for('take_course') }}" method="post">
             <label for="name">Name:</label>
