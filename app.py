@@ -1,6 +1,3 @@
-# app.py
-import os
-from flask_frozen import Freezer
 from flask import Flask, render_template, request, redirect, url_for
 import json
 import smtplib
